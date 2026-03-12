@@ -28,6 +28,7 @@ export default function Header({ currentUser, search, setSearch, onSettings, onA
           { id: "tasks",    label: "업무 목록", icon: "📋" },
           { id: "calendar", label: "일정 달력", icon: "📅" },
           { id: "gantt",    label: "간트 차트", icon: "📊" },
+          { id: "agent",    label: "에이전트",  icon: "🤖" },
         ].map(tab => (
           <button
             key={tab.id}

@@ -9,6 +9,7 @@ import AddTeamModal from "./components/AddTeamModal";
 import SettingsPage from "./components/SettingsPage";
 import CalendarPage from "./components/CalendarPage";
 import GanttPage from "./components/GanttPage";
+import AgentPage from "./components/AgentPage";
 
 export default function App() {
   const [data, setData]             = useState(initialData);
@@ -114,6 +115,12 @@ export default function App() {
             tasks={data.tasks}
             teams={data.teams}
             onSelectTask={setSelTask}
+          />
+        )}
+        {view === "agent" && (
+          <AgentPage
+            tasks={data.tasks}
+            teams={data.teams}
           />
         )}
       </div>
