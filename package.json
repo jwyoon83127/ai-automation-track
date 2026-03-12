@@ -1,0 +1,8 @@
+{
+  "name": "ai-automation-track",
+  "private": true,
+  "scripts": {
+    "build": "npm install --prefix projectflow && npm run build --prefix projectflow",
+    "dev": "npm run dev --prefix projectflow"
+  }
+}

@@ -1,5 +1,3 @@
 {
-  "buildCommand": "cd projectflow && npm install && npm run build",
-  "outputDirectory": "projectflow/dist",
-  "installCommand": "echo skip"
+  "outputDirectory": "projectflow/dist"
 }
