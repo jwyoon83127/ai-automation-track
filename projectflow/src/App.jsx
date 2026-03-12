@@ -8,6 +8,7 @@ import AddTaskModal from "./components/AddTaskModal";
 import AddTeamModal from "./components/AddTeamModal";
 import SettingsPage from "./components/SettingsPage";
 import CalendarPage from "./components/CalendarPage";
+import GanttPage from "./components/GanttPage";
 
 export default function App() {
   const [data, setData]             = useState(initialData);
@@ -103,6 +104,13 @@ export default function App() {
         )}
         {view === "calendar" && (
           <CalendarPage
+            tasks={data.tasks}
+            teams={data.teams}
+            onSelectTask={setSelTask}
+          />
+        )}
+        {view === "gantt" && (
+          <GanttPage
             tasks={data.tasks}
             teams={data.teams}
             onSelectTask={setSelTask}
