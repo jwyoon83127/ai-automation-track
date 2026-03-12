@@ -1,7 +1,7 @@
 import Avatar from "./Avatar";
 import { ROLES, PERMISSIONS, C } from "../constants";
 
-export default function Header({ currentUser, search, setSearch, onSettings, onAddTask }) {
+export default function Header({ currentUser, search, setSearch, onSettings, onAddTask, view, setView }) {
   const role = ROLES[currentUser.role];
   const perms = PERMISSIONS[currentUser.role];
 
@@ -21,6 +21,32 @@ export default function Header({ currentUser, search, setSearch, onSettings, onA
         background: "linear-gradient(135deg,#4f46e5,#7c3aed)",
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
       }}>ProjectFlow</span>
+
+      {/* Navigation tabs */}
+      <div style={{ display: "flex", alignItems: "center", gap: 2, marginLeft: 10, background: "#f1f5f9", borderRadius: 10, padding: 3 }}>
+        {[
+          { id: "tasks",    label: "업무 목록", icon: "📋" },
+          { id: "calendar", label: "일정 달력", icon: "📅" },
+        ].map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setView(tab.id)}
+            style={{
+              background: view === tab.id ? "#fff" : "transparent",
+              border: "none",
+              borderRadius: 8,
+              padding: "5px 12px",
+              color: view === tab.id ? "#4f46e5" : "#64748b",
+              fontSize: 12,
+              fontWeight: view === tab.id ? 600 : 400,
+              cursor: "pointer",
+              display: "flex", alignItems: "center", gap: 5,
+              boxShadow: view === tab.id ? "0 1px 3px rgba(15,23,42,0.08)" : "none",
+              transition: "all 0.15s",
+            }}
+          >{tab.icon} {tab.label}</button>
+        ))}
+      </div>
 
       <div style={{ flex: 1 }} />
 

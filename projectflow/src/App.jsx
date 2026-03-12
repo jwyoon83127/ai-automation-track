@@ -7,9 +7,11 @@ import TaskDetail from "./components/TaskDetail";
 import AddTaskModal from "./components/AddTaskModal";
 import AddTeamModal from "./components/AddTeamModal";
 import SettingsPage from "./components/SettingsPage";
+import CalendarPage from "./components/CalendarPage";
 
 export default function App() {
   const [data, setData]             = useState(initialData);
+  const [view, setView]             = useState("tasks");
   const [selTeam, setSelTeam]       = useState("전체");
   const [stFilter, setStFilter]     = useState("전체");
   const [selTask, setSelTask]        = useState(null);
@@ -75,6 +77,8 @@ export default function App() {
         setSearch={setSearch}
         onSettings={() => setShowSettings(true)}
         onAddTask={() => setShowAddTask(true)}
+        view={view}
+        setView={setView}
       />
 
       <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "calc(100vh - 56px)" }}>
@@ -89,12 +93,21 @@ export default function App() {
           onAddTeam={() => setShowAddTeam(true)}
         />
 
-        <TaskList
-          tasks={filtered}
-          teams={data.teams}
-          stats={getStats(selTeam)}
-          onSelectTask={setSelTask}
-        />
+        {view === "tasks" && (
+          <TaskList
+            tasks={filtered}
+            teams={data.teams}
+            stats={getStats(selTeam)}
+            onSelectTask={setSelTask}
+          />
+        )}
+        {view === "calendar" && (
+          <CalendarPage
+            tasks={data.tasks}
+            teams={data.teams}
+            onSelectTask={setSelTask}
+          />
+        )}
       </div>
 
       {showSettings && (
