@@ -1,7 +1,7 @@
 import Avatar from "./Avatar";
 import { ROLES, PERMISSIONS, C } from "../constants";
 
-export default function Header({ currentUser, search, setSearch, onSettings, onAddTask }) {
+export default function Header({ currentUser, search, setSearch, onSettings, onAddTask, view, setView }) {
   const role = ROLES[currentUser.role];
   const perms = PERMISSIONS[currentUser.role];
 
@@ -21,6 +21,17 @@ export default function Header({ currentUser, search, setSearch, onSettings, onA
         background: "linear-gradient(135deg,#4f46e5,#7c3aed)",
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
       }}>ProjectFlow</span>
+
+      {/* View toggle */}
+      <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 9, padding: 3, gap: 2 }}>
+        {[["list", "☰", "목록"], ["calendar", "📅", "캘린더"]].map(([v, icon, label]) => (
+          <button
+            key={v}
+            onClick={() => setView(v)}
+            style={{ background: view === v ? "#ffffff" : "transparent", border: "none", borderRadius: 7, padding: "5px 10px", color: view === v ? "#4f46e5" : "#94a3b8", fontSize: 11, fontWeight: view === v ? 600 : 400, cursor: "pointer", display: "flex", alignItems: "center", gap: 4, boxShadow: view === v ? "0 1px 3px rgba(15,23,42,0.08)" : "none", transition: "all 0.15s" }}
+          >{icon} {label}</button>
+        ))}
+      </div>
 
       <div style={{ flex: 1 }} />
 

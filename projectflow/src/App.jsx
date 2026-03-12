@@ -3,6 +3,7 @@ import { initialData, PERMISSIONS } from "./constants";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import TaskList from "./components/TaskList";
+import CalendarView from "./components/CalendarView";
 import TaskDetail from "./components/TaskDetail";
 import AddTaskModal from "./components/AddTaskModal";
 import AddTeamModal from "./components/AddTeamModal";
@@ -17,6 +18,7 @@ export default function App() {
   const [showAddTeam, setShowAddTeam] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [search, setSearch]         = useState("");
+  const [view, setView]             = useState("list"); // "list" | "calendar"
 
   const currentUser = data.users.find(u => u.id === data.currentUserId) || data.users[0];
   const perms = PERMISSIONS[currentUser.role];
@@ -75,6 +77,8 @@ export default function App() {
         setSearch={setSearch}
         onSettings={() => setShowSettings(true)}
         onAddTask={() => setShowAddTask(true)}
+        view={view}
+        setView={setView}
       />
 
       <div style={{ display: "flex", flex: 1, overflow: "hidden", height: "calc(100vh - 56px)" }}>
@@ -89,12 +93,20 @@ export default function App() {
           onAddTeam={() => setShowAddTeam(true)}
         />
 
-        <TaskList
-          tasks={filtered}
-          teams={data.teams}
-          stats={getStats(selTeam)}
-          onSelectTask={setSelTask}
-        />
+        {view === "list" ? (
+          <TaskList
+            tasks={filtered}
+            teams={data.teams}
+            stats={getStats(selTeam)}
+            onSelectTask={setSelTask}
+          />
+        ) : (
+          <CalendarView
+            tasks={filtered}
+            teams={data.teams}
+            onSelectTask={setSelTask}
+          />
+        )}
       </div>
 
       {showSettings && (
