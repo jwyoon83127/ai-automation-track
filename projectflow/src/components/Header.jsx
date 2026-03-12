@@ -25,6 +25,7 @@ export default function Header({ currentUser, search, setSearch, onSettings, onA
       {/* Navigation tabs */}
       <div style={{ display: "flex", alignItems: "center", gap: 2, marginLeft: 10, background: "#f1f5f9", borderRadius: 10, padding: 3 }}>
         {[
+          { id: "dashboard", label: "대시보드",  icon: "🏠" },
           { id: "tasks",    label: "업무 목록", icon: "📋" },
           { id: "calendar", label: "일정 달력", icon: "📅" },
           { id: "gantt",    label: "간트 차트", icon: "📊" },
