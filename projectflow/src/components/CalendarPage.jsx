@@ -56,10 +56,10 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
       {/* Month stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 14 }}>
         {[
-          { label: "이번 달 전체", value: stats.total,      color: "#4f46e5", icon: "📋" },
-          { label: "진행중",       value: stats.inProgress,  color: "#7c3aed", icon: "⚡" },
-          { label: "대기중",       value: stats.waiting,     color: "#d97706", icon: "⏳" },
-          { label: "완료",         value: stats.done,        color: "#059669", icon: "✅" },
+          { label: "이번 달 전체", value: stats.total,      color: "#2563eb", icon: "📋" },
+          { label: "진행중",       value: stats.inProgress,  color: "#1e3a8a", icon: "⚡" },
+          { label: "대기중",       value: stats.waiting,     color: "#0ea5e9", icon: "⏳" },
+          { label: "완료",         value: stats.done,        color: "#0891b2", icon: "✅" },
         ].map(s => (
           <div key={s.label} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10, boxShadow: "0 1px 3px rgba(15,23,42,0.04)" }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: `${s.color}12`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>{s.icon}</div>
@@ -92,9 +92,9 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
         </div>
         <button
           onClick={goToday}
-          onMouseEnter={e => { e.currentTarget.style.background = "rgba(79,70,229,0.1)"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "rgba(79,70,229,0.06)"; }}
-          style={{ background: "rgba(79,70,229,0.06)", border: "1px solid rgba(79,70,229,0.2)", borderRadius: 8, padding: "6px 14px", cursor: "pointer", color: "#4f46e5", fontSize: 12, fontWeight: 600, transition: "background 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = "rgba(37,99,235,0.1)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "rgba(37,99,235,0.06)"; }}
+          style={{ background: "rgba(37,99,235,0.06)", border: "1px solid rgba(37,99,235,0.2)", borderRadius: 8, padding: "6px 14px", cursor: "pointer", color: "#2563eb", fontSize: 12, fontWeight: 600, transition: "background 0.2s" }}
         >오늘</button>
       </div>
 
@@ -104,7 +104,7 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
         {/* Day-of-week headers */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", background: "#fafbfc", borderBottom: "1px solid #e2e8f0" }}>
           {DAY_NAMES.map((d, i) => (
-            <div key={d} style={{ padding: "10px 0", textAlign: "center", fontSize: 12, fontWeight: 600, color: i === 0 ? "#dc2626" : i === 6 ? "#4f46e5" : "#64748b" }}>
+            <div key={d} style={{ padding: "10px 0", textAlign: "center", fontSize: 12, fontWeight: 600, color: i === 0 ? "#1e3a8a" : i === 6 ? "#2563eb" : "#64748b" }}>
               {d}
             </div>
           ))}
@@ -135,11 +135,11 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
                   width: 26, height: 26, borderRadius: "50%",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontSize: 12, fontWeight: todayCell ? 700 : 400, marginBottom: 4,
-                  background: todayCell ? "#4f46e5" : "transparent",
+                  background: todayCell ? "#2563eb" : "transparent",
                   color: todayCell ? "#fff"
                        : !cell.cur ? "#cbd5e1"
-                       : isSun    ? "#dc2626"
-                       : isSat    ? "#4f46e5"
+                       : isSun    ? "#1e3a8a"
+                       : isSat    ? "#2563eb"
                        : "#1e293b",
                 }}>
                   {cell.date.getDate()}
@@ -159,7 +159,7 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
                         fontSize: 10, padding: "2px 6px", borderRadius: 4, marginBottom: 2,
                         background: statusConfig[task.status]?.bg,
                         color: statusConfig[task.status]?.color,
-                        borderLeft: `3px solid ${team?.color || "#4f46e5"}`,
+                        borderLeft: `3px solid ${team?.color || "#2563eb"}`,
                         border: `1px solid ${statusConfig[task.status]?.color}25`,
                         borderLeftWidth: 3,
                         cursor: "pointer",
@@ -184,7 +184,7 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
 
       {/* Legend */}
       <div style={{ display: "flex", gap: 16, marginTop: 12, flexWrap: "wrap" }}>
-        {[["대기", "#64748b"], ["진행중", "#4f46e5"], ["완료", "#059669"]].map(([label, color]) => (
+        {[["대기", "#64748b"], ["진행중", "#2563eb"], ["완료", "#0891b2"]].map(([label, color]) => (
           <div key={label} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#64748b" }}>
             <span style={{ width: 10, height: 10, borderRadius: 2, background: `${color}18`, border: `1px solid ${color}40`, borderLeft: `3px solid ${color}`, display: "inline-block" }} />
             {label}

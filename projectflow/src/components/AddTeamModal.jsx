@@ -2,7 +2,7 @@ import { useState } from "react";
 import { C } from "../constants";
 
 export default function AddTeamModal({ onAdd, onClose }) {
-  const [nTeam, setNTeam] = useState({ name: "", emoji: "🚀", color: "#4f46e5" });
+  const [nTeam, setNTeam] = useState({ name: "", emoji: "🚀", color: "#2563eb" });
 
   const handleAdd = () => {
     if (!nTeam.name) return;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { C, statusConfig, priorityConfig, ROLES, PERMISSIONS } from "../constants";
 
-const STATUS_COLOR = { "완료": "#059669", "진행중": "#4f46e5", "대기": "#94a3b8" };
+const STATUS_COLOR = { "완료": "#0891b2", "진행중": "#2563eb", "대기": "#94a3b8" };
 
 /* ── Delete confirmation modal ──────────────────── */
 function DeleteConfirm({ taskTitle, onConfirm, onCancel }) {
@@ -26,7 +26,7 @@ function DeleteConfirm({ taskTitle, onConfirm, onCancel }) {
           >취소</button>
           <button
             onClick={onConfirm}
-            style={{ flex: 1, padding: "10px 0", border: "none", borderRadius: 10, background: "linear-gradient(135deg,#dc2626,#ef4444)", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+            style={{ flex: 1, padding: "10px 0", border: "none", borderRadius: 10, background: "linear-gradient(135deg,#1e3a8a,#1e3a8a)", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
           >삭제 확인</button>
         </div>
       </div>
@@ -93,13 +93,13 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
             <div style={{ background: "#fafbfc", borderRadius: 10, padding: "12px 15px", border: "1px solid #f1f5f9" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
                 <span style={{ fontSize: 12, color: "#475569", fontWeight: 500 }}>진행률</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#4f46e5" }}>{task.progress}%</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#2563eb" }}>{task.progress}%</span>
               </div>
               <div style={{ height: 7, background: "#e2e8f0", borderRadius: 4, overflow: "hidden", marginBottom: perms.editTask ? 9 : 0 }}>
-                <div style={{ height: "100%", width: `${task.progress}%`, background: task.progress === 100 ? "#059669" : "linear-gradient(90deg,#4f46e5,#7c3aed)", borderRadius: 4, transition: "width 0.3s" }} />
+                <div style={{ height: "100%", width: `${task.progress}%`, background: task.progress === 100 ? "#0891b2" : "linear-gradient(90deg,#2563eb,#1e3a8a)", borderRadius: 4, transition: "width 0.3s" }} />
               </div>
               {perms.editTask
-                ? <input type="range" min="0" max="100" value={task.progress} onChange={e => onUpdateProgress(task.id, e.target.value)} style={{ width: "100%", accentColor: "#4f46e5" }} />
+                ? <input type="range" min="0" max="100" value={task.progress} onChange={e => onUpdateProgress(task.id, e.target.value)} style={{ width: "100%", accentColor: "#2563eb" }} />
                 : <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 5 }}>🔒 {role.label}은 수정 권한이 없습니다</div>}
             </div>
 
@@ -120,13 +120,13 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
               <div style={{ background: "#fafbfc", borderRadius: 12, border: "1px solid #f1f5f9", overflow: "hidden" }}>
                 <div style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <span style={{ fontSize: 12, fontWeight: 700, color: "#1e293b" }}>🔀 하위과제</span>
-                  <span style={{ fontSize: 11, color: doneSubs === subtasks.length ? "#059669" : "#94a3b8", fontWeight: 600 }}>
+                  <span style={{ fontSize: 11, color: doneSubs === subtasks.length ? "#0891b2" : "#94a3b8", fontWeight: 600 }}>
                     {doneSubs}/{subtasks.length} 완료
                   </span>
                 </div>
                 {/* Progress bar for subtasks */}
                 <div style={{ height: 3, background: "#e2e8f0" }}>
-                  <div style={{ height: "100%", width: `${subtasks.length ? (doneSubs / subtasks.length) * 100 : 0}%`, background: team?.color || "#4f46e5", transition: "width 0.3s" }} />
+                  <div style={{ height: "100%", width: `${subtasks.length ? (doneSubs / subtasks.length) * 100 : 0}%`, background: team?.color || "#2563eb", transition: "width 0.3s" }} />
                 </div>
                 {subtasks.map(sub => {
                   const sc = STATUS_COLOR[sub.status] || "#94a3b8";
@@ -139,7 +139,7 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
                         style={{
                           width: 18, height: 18, borderRadius: 5, flexShrink: 0,
                           border: sub.status === "완료" ? "none" : `2px solid #d1d5db`,
-                          background: sub.status === "완료" ? "#059669" : "transparent",
+                          background: sub.status === "완료" ? "#0891b2" : "transparent",
                           cursor: perms.editTask && onUpdateSubtask ? "pointer" : "default",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: 11, color: "#fff",
@@ -158,7 +158,7 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
                       <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
                         {sub.status === "진행중" && (
                           <div style={{ width: 50, height: 4, background: "#e2e8f0", borderRadius: 2, overflow: "hidden" }}>
-                            <div style={{ width: `${sub.progress}%`, height: "100%", background: team?.color || "#4f46e5" }} />
+                            <div style={{ width: `${sub.progress}%`, height: "100%", background: team?.color || "#2563eb" }} />
                           </div>
                         )}
                         <span style={{ fontSize: 10, color: sc, fontWeight: 600, minWidth: 28, textAlign: "right" }}>{sub.progress}%</span>
@@ -173,7 +173,7 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
             {task.tags?.length > 0 && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
                 {task.tags.map(tag => (
-                  <span key={tag} style={{ fontSize: 11, padding: "3px 10px", borderRadius: 20, background: "rgba(79,70,229,0.08)", color: "#4f46e5", border: "1px solid rgba(79,70,229,0.15)" }}>#{tag}</span>
+                  <span key={tag} style={{ fontSize: 11, padding: "3px 10px", borderRadius: 20, background: "rgba(37,99,235,0.08)", color: "#2563eb", border: "1px solid rgba(37,99,235,0.15)" }}>#{tag}</span>
                 ))}
               </div>
             )}
@@ -182,7 +182,7 @@ export default function TaskDetail({ task, teams, currentUser, onClose, onUpdate
             {perms.deleteTask
               ? <button
                   onClick={() => setShowDeleteConfirm(true)}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,38,38,0.06)"; e.currentTarget.style.color = "#dc2626"; e.currentTarget.style.borderColor = "rgba(220,38,38,0.2)"; }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(30,58,138,0.06)"; e.currentTarget.style.color = "#1e3a8a"; e.currentTarget.style.borderColor = "rgba(30,58,138,0.2)"; }}
                   onMouseLeave={e => { e.currentTarget.style.background = "#fafbfc"; e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.borderColor = "#e2e8f0"; }}
                   style={{ background: "#fafbfc", border: "1px solid #e2e8f0", borderRadius: 9, padding: "9px 0", color: "#94a3b8", fontSize: 12, cursor: "pointer", transition: "all 0.2s", width: "100%" }}
                 >🗑️ 업무 삭제</button>

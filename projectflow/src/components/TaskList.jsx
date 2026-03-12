@@ -9,10 +9,10 @@ export default function TaskList({ tasks, teams, stats, onSelectTask }) {
       {/* Stats */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 14 }}>
         {[
-          { label: "전체 업무", value: stats.total,      color: "#4f46e5", icon: "📋" },
-          { label: "진행중",   value: stats.inProgress,  color: "#7c3aed", icon: "⚡" },
-          { label: "대기중",   value: stats.waiting,     color: "#d97706", icon: "⏳" },
-          { label: "완료",     value: stats.done,        color: "#059669", icon: "✅" },
+          { label: "전체 업무", value: stats.total,      color: "#2563eb", icon: "📋" },
+          { label: "진행중",   value: stats.inProgress,  color: "#1e3a8a", icon: "⚡" },
+          { label: "대기중",   value: stats.waiting,     color: "#0ea5e9", icon: "⏳" },
+          { label: "완료",     value: stats.done,        color: "#0891b2", icon: "✅" },
         ].map(s => (
           <div key={s.label} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10, boxShadow: "0 1px 3px rgba(15,23,42,0.04)" }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: `${s.color}12`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>{s.icon}</div>
@@ -31,11 +31,11 @@ export default function TaskList({ tasks, teams, stats, onSelectTask }) {
             <span style={{ fontSize: 12, color: "#475569", fontWeight: 600 }}>전체 완료율</span>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 11, color: "#94a3b8" }}>{stats.done} / {stats.total}건</span>
-              <span style={{ fontSize: 13, color: "#4f46e5", fontWeight: 700 }}>{pct}%</span>
+              <span style={{ fontSize: 13, color: "#2563eb", fontWeight: 700 }}>{pct}%</span>
             </div>
           </div>
           <div style={{ height: 7, background: "#f1f5f9", borderRadius: 4, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#4f46e5,#059669)", borderRadius: 4, transition: "width 0.5s" }} />
+            <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#2563eb,#0891b2)", borderRadius: 4, transition: "width 0.5s" }} />
           </div>
         </div>
       )}
@@ -49,11 +49,11 @@ export default function TaskList({ tasks, teams, stats, onSelectTask }) {
             <div
               key={task.id}
               onClick={() => onSelectTask(task)}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(79,70,229,0.1)"; e.currentTarget.style.borderColor = "#c7d2fe"; }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.1)"; e.currentTarget.style.borderColor = "#c7d2fe"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(15,23,42,0.04)"; e.currentTarget.style.borderColor = "#e2e8f0"; }}
               style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: "13px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: 14, marginBottom: 7, transition: "all 0.2s", boxShadow: "0 1px 3px rgba(15,23,42,0.04)" }}
             >
-              <div style={{ width: 4, height: 44, borderRadius: 2, background: team?.color || "#4f46e5", flexShrink: 0 }} />
+              <div style={{ width: 4, height: 44, borderRadius: 2, background: team?.color || "#2563eb", flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 5 }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{task.title}</span>
@@ -69,7 +69,7 @@ export default function TaskList({ tasks, teams, stats, onSelectTask }) {
               <div style={{ flexShrink: 0, width: 70 }}>
                 <div style={{ fontSize: 11, color: "#94a3b8", marginBottom: 3, textAlign: "right" }}>{task.progress}%</div>
                 <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: `${task.progress}%`, background: task.progress === 100 ? "#059669" : "linear-gradient(90deg,#4f46e5,#7c3aed)", borderRadius: 3, transition: "width 0.4s" }} />
+                  <div style={{ height: "100%", width: `${task.progress}%`, background: task.progress === 100 ? "#0891b2" : "linear-gradient(90deg,#2563eb,#1e3a8a)", borderRadius: 3, transition: "width 0.4s" }} />
                 </div>
               </div>
             </div>

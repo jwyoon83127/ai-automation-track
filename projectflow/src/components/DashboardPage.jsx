@@ -52,9 +52,9 @@ function ProgBar({ value, color, height = 7, bg = "#f1f5f9" }) {
 }
 
 function DueBadge({ days }) {
-  if (days < 0)  return <span style={{ fontSize: 10, fontWeight: 700, color: "#dc2626", background: "#fef2f2", padding: "2px 7px", borderRadius: 6 }}>{Math.abs(days)}일 초과</span>;
-  if (days === 0) return <span style={{ fontSize: 10, fontWeight: 700, color: "#dc2626", background: "#fef2f2", padding: "2px 7px", borderRadius: 6 }}>오늘 마감</span>;
-  if (days <= 3)  return <span style={{ fontSize: 10, fontWeight: 700, color: "#d97706", background: "#fffbeb", padding: "2px 7px", borderRadius: 6 }}>D-{days}</span>;
+  if (days < 0)  return <span style={{ fontSize: 10, fontWeight: 700, color: "#1e3a8a", background: "#fef2f2", padding: "2px 7px", borderRadius: 6 }}>{Math.abs(days)}일 초과</span>;
+  if (days === 0) return <span style={{ fontSize: 10, fontWeight: 700, color: "#1e3a8a", background: "#fef2f2", padding: "2px 7px", borderRadius: 6 }}>오늘 마감</span>;
+  if (days <= 3)  return <span style={{ fontSize: 10, fontWeight: 700, color: "#0ea5e9", background: "#fffbeb", padding: "2px 7px", borderRadius: 6 }}>D-{days}</span>;
   return <span style={{ fontSize: 10, color: "#64748b", background: "#f1f5f9", padding: "2px 7px", borderRadius: 6 }}>D-{days}</span>;
 }
 
@@ -122,10 +122,10 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
       {/* ── KPI cards ─────────────────────────────── */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 12 }}>
         <KpiCard icon="📋" label="전체 업무"   value={stats.total}        color="#1e293b"  bg="#f1f5f9"            sub={`하위과제 ${totalSubtasks}건 포함`} />
-        <KpiCard icon="✅" label="완료"        value={stats.done}         color="#059669"  bg="rgba(5,150,105,0.1)"  sub={`완료율 ${stats.doneRate}%`} />
-        <KpiCard icon="⚡" label="진행중"      value={stats.wip}          color="#4f46e5"  bg="rgba(79,70,229,0.1)"  sub={`평균 진행률 ${stats.avgProgress}%`} />
-        <KpiCard icon="⏳" label="대기"        value={stats.waiting}      color="#d97706"  bg="rgba(217,119,6,0.1)"  sub="시작 전 업무" />
-        <KpiCard icon="⚠️" label="마감 초과"   value={stats.overdue}      color={stats.overdue > 0 ? "#dc2626" : "#059669"} bg={stats.overdue > 0 ? "rgba(220,38,38,0.1)" : "rgba(5,150,105,0.1)"} sub={stats.overdue > 0 ? "즉시 확인 필요" : "정상 진행 중"} />
+        <KpiCard icon="✅" label="완료"        value={stats.done}         color="#0891b2"  bg="rgba(8,145,178,0.1)"  sub={`완료율 ${stats.doneRate}%`} />
+        <KpiCard icon="⚡" label="진행중"      value={stats.wip}          color="#2563eb"  bg="rgba(37,99,235,0.1)"  sub={`평균 진행률 ${stats.avgProgress}%`} />
+        <KpiCard icon="⏳" label="대기"        value={stats.waiting}      color="#0ea5e9"  bg="rgba(14,165,233,0.1)"  sub="시작 전 업무" />
+        <KpiCard icon="⚠️" label="마감 초과"   value={stats.overdue}      color={stats.overdue > 0 ? "#1e3a8a" : "#0891b2"} bg={stats.overdue > 0 ? "rgba(30,58,138,0.1)" : "rgba(8,145,178,0.1)"} sub={stats.overdue > 0 ? "즉시 확인 필요" : "정상 진행 중"} />
       </div>
 
       {/* ── Row 2: 전체 진행률 + 팀별 현황 ─────────── */}
@@ -137,19 +137,19 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
           <div style={{ position: "relative" }}>
             <svg width={112} height={112} viewBox="0 0 112 112">
               <circle cx={CX} cy={CY} r={R} fill="none" stroke="#f1f5f9" strokeWidth={STROKE} />
-              <circle cx={CX} cy={CY} r={R} fill="none" stroke="#059669" strokeWidth={STROKE}
+              <circle cx={CX} cy={CY} r={R} fill="none" stroke="#0891b2" strokeWidth={STROKE}
                 strokeDasharray={circumference} strokeDashoffset={offset}
                 strokeLinecap="round" transform={`rotate(-90 ${CX} ${CY})`}
                 style={{ transition: "stroke-dashoffset 0.6s" }}
               />
             </svg>
             <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ fontSize: 22, fontWeight: 800, color: "#059669" }}>{stats.doneRate}%</div>
+              <div style={{ fontSize: 22, fontWeight: 800, color: "#0891b2" }}>{stats.doneRate}%</div>
               <div style={{ fontSize: 9, color: "#94a3b8" }}>완료</div>
             </div>
           </div>
           <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 6 }}>
-            {[["완료", stats.done, "#059669"], ["진행중", stats.wip, "#4f46e5"], ["대기", stats.waiting, "#d97706"]].map(([label, val, color]) => (
+            {[["완료", stats.done, "#0891b2"], ["진행중", stats.wip, "#2563eb"], ["대기", stats.waiting, "#0ea5e9"]].map(([label, val, color]) => (
               <div key={label} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11 }}>
                 <div style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />
                 <span style={{ color: "#64748b", flex: 1 }}>{label}</span>
@@ -173,7 +173,7 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
                   <span style={{ fontSize: 15 }}>{team.emoji}</span>
                   <span style={{ fontSize: 12, fontWeight: 600, color: team.color, flex: 1 }}>{team.name}</span>
                   <span style={{ fontSize: 10, color: "#94a3b8" }}>완료 {done}/{total}</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: avg >= 70 ? "#059669" : avg >= 40 ? "#4f46e5" : "#d97706", minWidth: 38, textAlign: "right" }}>{avg}%</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: avg >= 70 ? "#0891b2" : avg >= 40 ? "#2563eb" : "#0ea5e9", minWidth: 38, textAlign: "right" }}>{avg}%</span>
                 </div>
                 <ProgBar value={avg} color={team.color} />
                 <div style={{ display: "flex", gap: 10, marginTop: 4, fontSize: 10, color: "#94a3b8" }}>
@@ -193,7 +193,7 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
         {/* Upcoming */}
         <SectionCard
           title="📅 마감 임박 업무 (14일 이내)"
-          action={<span style={{ fontSize: 11, color: upcoming.length > 0 ? "#d97706" : "#059669", fontWeight: 600 }}>{upcoming.length}건</span>}
+          action={<span style={{ fontSize: 11, color: upcoming.length > 0 ? "#0ea5e9" : "#0891b2", fontWeight: 600 }}>{upcoming.length}건</span>}
         >
           {upcoming.length === 0 ? (
             <div style={{ padding: "24px 18px", textAlign: "center", color: "#94a3b8", fontSize: 12 }}>마감 임박 업무가 없습니다 🎉</div>
@@ -229,10 +229,10 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
         {/* Overdue */}
         <SectionCard
           title="⚠️ 마감 초과 업무"
-          action={<span style={{ fontSize: 11, color: overdue.length > 0 ? "#dc2626" : "#059669", fontWeight: 600 }}>{overdue.length}건</span>}
+          action={<span style={{ fontSize: 11, color: overdue.length > 0 ? "#1e3a8a" : "#0891b2", fontWeight: 600 }}>{overdue.length}건</span>}
         >
           {overdue.length === 0 ? (
-            <div style={{ padding: "24px 18px", textAlign: "center", color: "#059669", fontSize: 12 }}>마감 초과 업무 없음 ✅</div>
+            <div style={{ padding: "24px 18px", textAlign: "center", color: "#0891b2", fontSize: 12 }}>마감 초과 업무 없음 ✅</div>
           ) : (
             <div>
               {overdue.map(task => {
@@ -242,11 +242,11 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
                   <div
                     key={task.id}
                     onClick={() => onSelectTask(task)}
-                    style={{ padding: "10px 18px", borderBottom: "1px solid #f8fafc", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, background: "rgba(220,38,38,0.02)" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "rgba(220,38,38,0.05)"}
-                    onMouseLeave={e => e.currentTarget.style.background = "rgba(220,38,38,0.02)"}
+                    style={{ padding: "10px 18px", borderBottom: "1px solid #f8fafc", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, background: "rgba(30,58,138,0.02)" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "rgba(30,58,138,0.05)"}
+                    onMouseLeave={e => e.currentTarget.style.background = "rgba(30,58,138,0.02)"}
                   >
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#dc2626", flexShrink: 0 }} />
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#1e3a8a", flexShrink: 0 }} />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 12, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{task.title}</div>
                       <div style={{ fontSize: 10, color: "#94a3b8" }}>{task.assignee} · {team?.name}</div>
@@ -285,9 +285,9 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
                       <span style={{ fontSize: 11, fontWeight: 600, color: "#1e293b", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{task.title}</span>
                       <span style={{ fontSize: 10, color: team?.color }}>{team?.name}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: task.progress < 20 ? "#dc2626" : task.progress < 50 ? "#d97706" : "#4f46e5", flexShrink: 0 }}>{task.progress}%</span>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: task.progress < 20 ? "#1e3a8a" : task.progress < 50 ? "#0ea5e9" : "#2563eb", flexShrink: 0 }}>{task.progress}%</span>
                     </div>
-                    <ProgBar value={task.progress} color={task.progress < 20 ? "#dc2626" : task.progress < 50 ? "#d97706" : "#4f46e5"} />
+                    <ProgBar value={task.progress} color={task.progress < 20 ? "#1e3a8a" : task.progress < 50 ? "#0ea5e9" : "#2563eb"} />
                     <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 3 }}>담당: {task.assignee} · 마감 {daysUntil(task.dueDate) < 0 ? `${Math.abs(daysUntil(task.dueDate))}일 초과` : `D-${daysUntil(task.dueDate)}`}</div>
                   </div>
                 );
@@ -312,7 +312,7 @@ export default function DashboardPage({ tasks, teams, onSelectTask }) {
                     onMouseEnter={e => e.currentTarget.style.background = "#fafbfc"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}
                   >
-                    <div style={{ width: 22, height: 22, borderRadius: 6, background: "rgba(5,150,105,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, flexShrink: 0 }}>✅</div>
+                    <div style={{ width: 22, height: 22, borderRadius: 6, background: "rgba(8,145,178,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, flexShrink: 0 }}>✅</div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 12, color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{task.title}</div>
                       <div style={{ fontSize: 10, color: "#94a3b8" }}>{task.assignee} · {task.dueDate}</div>

@@ -1,4 +1,4 @@
-export default function Avatar({ name, size = 28, color = "#4f46e5" }) {
+export default function Avatar({ name, size = 28, color = "#2563eb" }) {
   return (
     <div style={{
       width: size, height: size, borderRadius: "50%",

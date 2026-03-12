@@ -3,7 +3,7 @@ import { useState } from "react";
 const BASE_DAY_W = 22; // pixels per day at zoom=1
 const ROW_H      = 42;
 const LEFT_W     = 290;
-const STATUS_COLOR = { "완료": "#059669", "진행중": "#4f46e5", "대기": "#94a3b8" };
+const STATUS_COLOR = { "완료": "#0891b2", "진행중": "#2563eb", "대기": "#94a3b8" };
 const MONTH_KO = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
 
 function parseDate(str) {
@@ -79,10 +79,10 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
     todayOff >= 0 && todayOff <= totalDays ? (
       <div style={{
         position: "absolute", left: todayOff * dayW, top: 0,
-        width: 2, height, background: "rgba(239,68,68,0.7)",
+        width: 2, height, background: "rgba(30,58,138,0.7)",
         pointerEvents: "none", zIndex: 5,
       }}>
-        <div style={{ position: "absolute", top: -2, left: -4, width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
+        <div style={{ position: "absolute", top: -2, left: -4, width: 10, height: 10, borderRadius: "50%", background: "#1e3a8a" }} />
       </div>
     ) : null;
 
@@ -153,7 +153,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
         <div style={{ flex: 1 }} />
 
         {/* Legend */}
-        {[["완료","#059669"],["진행중","#4f46e5"],["대기","#94a3b8"]].map(([l,c]) => (
+        {[["완료","#0891b2"],["진행중","#2563eb"],["대기","#94a3b8"]].map(([l,c]) => (
           <div key={l} style={{ display:"flex", alignItems:"center", gap:4, fontSize:11, color:"#64748b" }}>
             <span style={{ width:10, height:10, borderRadius:2, background:`${c}55`, border:`1.5px solid ${c}`, display:"inline-block" }} />
             {l}
@@ -166,13 +166,13 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
             <button key={l} onClick={() => setZoom(z)} style={{
               background: zoom===z ? "#fff" : "transparent", border:"none", borderRadius:6,
               padding:"4px 10px", fontSize:11, cursor:"pointer", fontWeight: zoom===z ? 600 : 400,
-              color: zoom===z ? "#4f46e5" : "#64748b",
+              color: zoom===z ? "#2563eb" : "#64748b",
             }}>{l}</button>
           ))}
         </div>
 
         <button onClick={() => setExpanded(new Set(tasks.map(t=>t.id)))}
-          style={{ background:"rgba(79,70,229,0.06)", border:"1px solid rgba(79,70,229,0.2)", borderRadius:7, padding:"5px 11px", fontSize:11, color:"#4f46e5", cursor:"pointer" }}>
+          style={{ background:"rgba(37,99,235,0.06)", border:"1px solid rgba(37,99,235,0.2)", borderRadius:7, padding:"5px 11px", fontSize:11, color:"#2563eb", cursor:"pointer" }}>
           ▼ 모두 펼치기
         </button>
         <button onClick={() => setExpanded(new Set())}
@@ -221,7 +221,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
                 ))}
                 {/* Today marker in header */}
                 {todayOff >= 0 && todayOff <= totalDays && (
-                  <div style={{ position:"absolute", left: todayOff * dayW - 1, top:0, bottom:0, width:2, background:"rgba(239,68,68,0.5)", zIndex:5 }} />
+                  <div style={{ position:"absolute", left: todayOff * dayW - 1, top:0, bottom:0, width:2, background:"rgba(30,58,138,0.5)", zIndex:5 }} />
                 )}
               </div>
             </div>
@@ -244,7 +244,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
                   <div style={{ flex:1, position:"relative", background:`${team.color}04` }}>
                     {/* Today line in team band */}
                     {todayOff >= 0 && todayOff <= totalDays && (
-                      <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(239,68,68,0.25)", zIndex:3 }} />
+                      <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(30,58,138,0.25)", zIndex:3 }} />
                     )}
                   </div>
                 </div>
@@ -265,9 +265,9 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
                             <button
                               onClick={e => { e.stopPropagation(); toggle(task.id); }}
                               style={{
-                                background: isExp ? "rgba(79,70,229,0.08)" : "#f1f5f9",
+                                background: isExp ? "rgba(37,99,235,0.08)" : "#f1f5f9",
                                 border:"none", borderRadius:4, width:18, height:18,
-                                cursor:"pointer", fontSize:8, color: isExp ? "#4f46e5" : "#94a3b8",
+                                cursor:"pointer", fontSize:8, color: isExp ? "#2563eb" : "#94a3b8",
                                 display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
                               }}
                             >{isExp ? "▼" : "▶"}</button>
@@ -286,7 +286,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
                         {/* Task bar */}
                         <div style={{ flex:1, position:"relative", overflow:"visible" }}>
                           {todayOff >= 0 && todayOff <= totalDays && (
-                            <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(239,68,68,0.35)", zIndex:3, pointerEvents:"none" }} />
+                            <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(30,58,138,0.35)", zIndex:3, pointerEvents:"none" }} />
                           )}
                           <Bar
                             startDate={task.createdAt}
@@ -318,7 +318,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
                             {/* Subtask bar */}
                             <div style={{ flex:1, position:"relative" }}>
                               {todayOff >= 0 && todayOff <= totalDays && (
-                                <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(239,68,68,0.25)", zIndex:3, pointerEvents:"none" }} />
+                                <div style={{ position:"absolute", left: todayOff * dayW, top:0, bottom:0, width:1.5, background:"rgba(30,58,138,0.25)", zIndex:3, pointerEvents:"none" }} />
                               )}
                               <Bar
                                 startDate={sub.startDate}
@@ -342,7 +342,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
 
       {/* ── Footer: today info ────────────────────────────── */}
       <div style={{ padding:"8px 20px", borderTop:"1px solid #e2e8f0", background:"#fff", display:"flex", alignItems:"center", gap:12, fontSize:11, color:"#94a3b8", flexShrink:0 }}>
-        <div style={{ width:10, height:10, borderRadius:"50%", background:"#ef4444" }} />
+        <div style={{ width:10, height:10, borderRadius:"50%", background:"#1e3a8a" }} />
         <span>오늘: {toDateStr(today)}</span>
         <span style={{ marginLeft:8 }}>
           빨간 세로선이 오늘 날짜 · 과제명을 클릭하면 상세 보기

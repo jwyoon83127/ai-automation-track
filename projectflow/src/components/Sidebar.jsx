@@ -6,7 +6,7 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
   const [editingTeamId, setEditingTeamId] = useState(null);
   const [editingTeamName, setEditingTeamName] = useState("");
 
-  const allTeams = [{ id: "전체", name: "전체", color: "#4f46e5", emoji: "📊" }, ...data.teams];
+  const allTeams = [{ id: "전체", name: "전체", color: "#2563eb", emoji: "📊" }, ...data.teams];
 
   const getStats = (tid) => {
     const ts = tid === "전체" ? data.tasks : data.tasks.filter(t => t.teamId === tid);
@@ -35,13 +35,13 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
         const isEditing = editingTeamId === team.id;
 
         if (team.id === "전체") return (
-          <button key={team.id} onClick={() => setSelTeam(team.id)} style={{ background: isA ? "rgba(79,70,229,0.06)" : "transparent", border: isA ? "1px solid rgba(79,70,229,0.18)" : "1px solid transparent", borderRadius: 9, padding: "8px 10px", textAlign: "left", color: isA ? "#4f46e5" : "#475569", display: "flex", alignItems: "center", gap: 7, cursor: "pointer", width: "100%" }}>
+          <button key={team.id} onClick={() => setSelTeam(team.id)} style={{ background: isA ? "rgba(37,99,235,0.06)" : "transparent", border: isA ? "1px solid rgba(37,99,235,0.18)" : "1px solid transparent", borderRadius: 9, padding: "8px 10px", textAlign: "left", color: isA ? "#2563eb" : "#475569", display: "flex", alignItems: "center", gap: 7, cursor: "pointer", width: "100%" }}>
             <span style={{ fontSize: 14 }}>{team.emoji}</span>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 12, fontWeight: isA ? 600 : 400 }}>{team.name}</div>
               <div style={{ fontSize: 10, color: "#94a3b8" }}>{ts.total}개</div>
             </div>
-            {isA && <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#4f46e5" }} />}
+            {isA && <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#2563eb" }} />}
           </button>
         );
 
@@ -49,7 +49,7 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
           <div key={team.id} style={{ position: "relative" }}>
             <button
               onClick={() => setSelTeam(team.id)}
-              style={{ background: isA ? "rgba(79,70,229,0.06)" : "transparent", border: isA ? "1px solid rgba(79,70,229,0.18)" : "1px solid transparent", borderRadius: 9, padding: "8px 10px", textAlign: "left", color: isA ? "#4f46e5" : "#475569", display: "flex", alignItems: "center", gap: 7, cursor: "pointer", width: "100%" }}
+              style={{ background: isA ? "rgba(37,99,235,0.06)" : "transparent", border: isA ? "1px solid rgba(37,99,235,0.18)" : "1px solid transparent", borderRadius: 9, padding: "8px 10px", textAlign: "left", color: isA ? "#2563eb" : "#475569", display: "flex", alignItems: "center", gap: 7, cursor: "pointer", width: "100%" }}
               className="team-btn"
             >
               <span style={{ fontSize: 14 }}>{team.emoji}</span>
@@ -69,7 +69,7 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
                 )}
                 <div style={{ fontSize: 10, color: "#94a3b8" }}>{ts.total}개</div>
               </div>
-              {isA && !isEditing && <div style={{ width: 5, height: 5, borderRadius: "50%", background: team.color || "#4f46e5" }} />}
+              {isA && !isEditing && <div style={{ width: 5, height: 5, borderRadius: "50%", background: team.color || "#2563eb" }} />}
               {perms.addTeam && !isEditing && (
                 <span
                   onClick={e => startRenameTeam(team, e)}
@@ -99,7 +99,7 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
         {Object.entries({ "업무 추가": perms.addTask, "업무 수정": perms.editTask, "업무 삭제": perms.deleteTask, "사용자 관리": perms.manageUsers }).map(([label, ok]) => (
           <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
             <span style={{ fontSize: 10, color: "#64748b" }}>{label}</span>
-            <span style={{ fontSize: 10, color: ok ? "#059669" : "#cbd5e1" }}>{ok ? "✓" : "✗"}</span>
+            <span style={{ fontSize: 10, color: ok ? "#0891b2" : "#cbd5e1" }}>{ok ? "✓" : "✗"}</span>
           </div>
         ))}
       </div>

@@ -1,7 +1,7 @@
 export const ROLES = {
-  admin:   { label:"관리자", color:"#dc2626", bg:"rgba(220,38,38,0.1)",   icon:"👑", desc:"모든 기능 접근 및 사용자·권한 관리" },
-  manager: { label:"매니저", color:"#d97706", bg:"rgba(217,119,6,0.1)",   icon:"⭐", desc:"업무 생성·수정·삭제, 팀 관리" },
-  member:  { label:"멤버",   color:"#4f46e5", bg:"rgba(79,70,229,0.1)",   icon:"👤", desc:"업무 조회 및 상태·진행률 수정" },
+  admin:   { label:"관리자", color:"#1e3a8a", bg:"rgba(30,58,138,0.1)",   icon:"👑", desc:"모든 기능 접근 및 사용자·권한 관리" },
+  manager: { label:"매니저", color:"#2563eb", bg:"rgba(37,99,235,0.1)",   icon:"⭐", desc:"업무 생성·수정·삭제, 팀 관리" },
+  member:  { label:"멤버",   color:"#0891b2", bg:"rgba(8,145,178,0.1)",   icon:"👤", desc:"업무 조회 및 상태·진행률 수정" },
   viewer:  { label:"뷰어",   color:"#64748b", bg:"rgba(100,116,139,0.1)", icon:"👁", desc:"업무 조회만 가능" },
 };
 
@@ -27,10 +27,10 @@ export const initialData = {
     { id:10, name:"강민서",   email:"minseo@project.io",   role:"viewer",  teamId:4,    joinedAt:"2026-03-01", status:"활성" },
   ],
   teams: [
-    { id:1, name:"프론트엔드", color:"#4f46e5", emoji:"🎨" },
-    { id:2, name:"백엔드",     color:"#059669", emoji:"⚙️" },
-    { id:3, name:"디자인",     color:"#d97706", emoji:"✏️" },
-    { id:4, name:"기획",       color:"#dc2626", emoji:"📋" },
+    { id:1, name:"프론트엔드", color:"#2563eb", emoji:"🎨" },
+    { id:2, name:"백엔드",     color:"#0891b2", emoji:"⚙️" },
+    { id:3, name:"디자인",     color:"#0ea5e9", emoji:"✏️" },
+    { id:4, name:"기획",       color:"#1e3a8a", emoji:"📋" },
   ],
   tasks: [
     { id:1,  teamId:1, title:"메인 페이지 리뉴얼",       description:"홈화면 UI/UX 전면 개편 및 반응형 작업",       status:"진행중", priority:"높음", assignee:"김민준", dueDate:"2026-03-25", createdAt:"2026-03-01", tags:["React","CSS"],           progress:65, subtasks:[
@@ -89,14 +89,14 @@ export const initialData = {
 export const statusConfig = {
   "전체":  { color:"#64748b", bg:"rgba(100,116,139,0.08)" },
   "대기":  { color:"#64748b", bg:"rgba(100,116,139,0.08)" },
-  "진행중":{ color:"#4f46e5", bg:"rgba(79,70,229,0.1)"    },
-  "완료":  { color:"#059669", bg:"rgba(5,150,105,0.1)"    },
+  "진행중":{ color:"#2563eb", bg:"rgba(37,99,235,0.1)"    },
+  "완료":  { color:"#0891b2", bg:"rgba(8,145,178,0.1)"    },
 };
 
 export const priorityConfig = {
-  "높음":{ color:"#dc2626", label:"🔴" },
-  "중간":{ color:"#d97706", label:"🟡" },
-  "낮음":{ color:"#059669", label:"🟢" },
+  "높음":{ color:"#1e3a8a", label:"🔵" },
+  "중간":{ color:"#2563eb", label:"🔹" },
+  "낮음":{ color:"#0ea5e9", label:"💠" },
 };
 
 export const C = {
@@ -128,7 +128,7 @@ export const C = {
   },
   xbtn: { background:"transparent", border:"none", color:"#94a3b8", fontSize:18, cursor:"pointer" },
   sbtn: (ok) => ({
-    background: ok ? "linear-gradient(135deg,#4f46e5,#7c3aed)" : "#f1f5f9",
+    background: ok ? "linear-gradient(135deg,#1e3a8a,#2563eb)" : "#f1f5f9",
     border:"none", borderRadius:10, padding:"11px 0",
     color: ok ? "#fff" : "#94a3b8", fontSize:13, fontWeight:600,
     cursor: ok ? "pointer" : "default", width:"100%",
