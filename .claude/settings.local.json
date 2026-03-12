@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun --version)",
+      "Bash(node --version)",
+      "Bash(npm --version)",
+      "Bash(npm create vite@latest . -- --template react)",
+      "Bash(npm create vite@latest projectflow -- --template react)",
+      "Bash(npm install)",
+      "Bash(rm -f /Users/jw/ai-automation-track/projectflow/src/App.css /Users/jw/ai-automation-track/projectflow/src/index.css /Users/jw/ai-automation-track/projectflow/src/App.jsx /Users/jw/ai-automation-track/projectflow/src/assets/react.svg /Users/jw/ai-automation-track/projectflow/public/vite.svg)",
+      "Bash(mkdir -p /Users/jw/ai-automation-track/projectflow/src/components)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git init)",
+      "Bash(git remote add origin https://github.com/jwyoon83127/ai-automation-track.git)",
+      "Bash(git branch -m main)",
+      "Bash(git add .)"
+    ]
+  }
+}
