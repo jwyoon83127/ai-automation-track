@@ -93,6 +93,18 @@ export const statusConfig = {
   "완료":  { color:"#0891b2", bg:"rgba(8,145,178,0.1)"    },
 };
 
+// Flat color map for status badges/bars (simpler than statusConfig)
+export const STATUS_COLOR = { "완료":"#0891b2", "진행중":"#2563eb", "대기":"#94a3b8" };
+
+// Returns days from today to dateStr (negative = overdue)
+export function daysUntil(dateStr) {
+  const due   = new Date(dateStr);
+  const today = new Date();
+  due.setHours(0,0,0,0);
+  today.setHours(0,0,0,0);
+  return Math.round((due - today) / 86400000);
+}
+
 export const priorityConfig = {
   "높음":{ color:"#1e3a8a", label:"🔵" },
   "중간":{ color:"#2563eb", label:"🔹" },

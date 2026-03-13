@@ -3,8 +3,8 @@ import { PERMISSIONS, statusConfig } from "../constants";
 
 export default function Sidebar({ data, setData, currentUser, selTeam, setSelTeam, stFilter, setStFilter, onAddTeam }) {
   const perms = PERMISSIONS[currentUser.role];
-  const [editingTeamId, setEditingTeamId] = useState(null);
-  const [editingTeamName, setEditingTeamName] = useState("");
+  // { id, name } while editing, null otherwise
+  const [editingTeam, setEditingTeam] = useState(null);
 
   const allTeams = [{ id: "전체", name: "전체", color: "#2563eb", emoji: "📊" }, ...data.teams];
 
@@ -15,14 +15,13 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
 
   const startRenameTeam = (team, e) => {
     e.stopPropagation();
-    setEditingTeamId(team.id);
-    setEditingTeamName(team.name);
+    setEditingTeam({ id: team.id, name: team.name });
   };
 
   const doRenameTeam = (teamId) => {
-    if (!editingTeamName.trim()) { setEditingTeamId(null); return; }
-    setData(d => ({ ...d, teams: d.teams.map(t => t.id === teamId ? { ...t, name: editingTeamName.trim() } : t) }));
-    setEditingTeamId(null);
+    if (!editingTeam?.name.trim()) { setEditingTeam(null); return; }
+    setData(d => ({ ...d, teams: d.teams.map(t => t.id === teamId ? { ...t, name: editingTeam.name.trim() } : t) }));
+    setEditingTeam(null);
   };
 
   return (
@@ -32,7 +31,7 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
       {allTeams.map(team => {
         const ts = getStats(team.id);
         const isA = selTeam === team.id;
-        const isEditing = editingTeamId === team.id;
+        const isEditing = editingTeam?.id === team.id;
 
         if (team.id === "전체") return (
           <button key={team.id} onClick={() => setSelTeam(team.id)} style={{ background: isA ? "rgba(37,99,235,0.06)" : "transparent", border: isA ? "1px solid rgba(37,99,235,0.18)" : "1px solid transparent", borderRadius: 9, padding: "8px 10px", textAlign: "left", color: isA ? "#2563eb" : "#475569", display: "flex", alignItems: "center", gap: 7, cursor: "pointer", width: "100%" }}>
@@ -57,10 +56,10 @@ export default function Sidebar({ data, setData, currentUser, selTeam, setSelTea
                 {isEditing ? (
                   <input
                     autoFocus
-                    value={editingTeamName}
-                    onChange={e => setEditingTeamName(e.target.value)}
+                    value={editingTeam?.name ?? ""}
+                    onChange={e => setEditingTeam(prev => ({ ...prev, name: e.target.value }))}
                     onBlur={() => doRenameTeam(team.id)}
-                    onKeyDown={e => { if (e.key === "Enter") doRenameTeam(team.id); if (e.key === "Escape") setEditingTeamId(null); }}
+                    onKeyDown={e => { if (e.key === "Enter") doRenameTeam(team.id); if (e.key === "Escape") setEditingTeam(null); }}
                     onClick={e => e.stopPropagation()}
                     style={{ fontSize: 12, fontWeight: 600, color: "#1e293b", background: "#ffffff", border: "1px solid #c7d2fe", borderRadius: 5, padding: "1px 5px", outline: "none", width: "100%" }}
                   />

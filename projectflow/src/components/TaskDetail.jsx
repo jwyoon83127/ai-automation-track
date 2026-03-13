@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { C, statusConfig, priorityConfig, ROLES, PERMISSIONS } from "../constants";
-
-const STATUS_COLOR = { "완료": "#0891b2", "진행중": "#2563eb", "대기": "#94a3b8" };
+import { C, statusConfig, priorityConfig, ROLES, PERMISSIONS, STATUS_COLOR } from "../constants";
 
 /* ── Delete confirmation modal ──────────────────── */
 function DeleteConfirm({ taskTitle, onConfirm, onCancel }) {

@@ -471,8 +471,9 @@ function generatePDF(tasks, teams) {
 
   const blob = new Blob([html], { type: "text/html;charset=utf-8" });
   const url  = URL.createObjectURL(blob);
-  const win  = window.open(url, "_blank");
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  window.open(url, "_blank");
+  // Revoke after 3s — enough time for the new tab to load the blob
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -515,7 +516,10 @@ export default function AgentPage({ tasks, teams }) {
     // Simulate thinking delay
     setTimeout(() => {
       const result = analyzeQuery(text, tasks, teams);
-      setMessages(prev => [...prev, { role: "agent", result }]);
+      setMessages(prev => {
+        const next = [...prev, { role: "agent", result }];
+        return next.length > 100 ? next.slice(next.length - 100) : next;
+      });
       setLoading(false);
     }, 600);
   };

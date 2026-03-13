@@ -1,14 +1,5 @@
 import { useMemo } from "react";
-import { priorityConfig } from "../constants";
-
-/* ── Helpers ───────────────────────────────────────── */
-function daysUntil(dateStr) {
-  const due   = new Date(dateStr);
-  const today = new Date();
-  due.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-  return Math.round((due - today) / 86400000);
-}
+import { priorityConfig, daysUntil } from "../constants";
 
 /* ── Sub-components ────────────────────────────────── */
 

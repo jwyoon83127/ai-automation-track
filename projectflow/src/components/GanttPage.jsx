@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { STATUS_COLOR } from "../constants";
 
 const BASE_DAY_W = 22; // pixels per day at zoom=1
 const ROW_H      = 42;
 const LEFT_W     = 290;
-const STATUS_COLOR = { "완료": "#0891b2", "진행중": "#2563eb", "대기": "#94a3b8" };
 const MONTH_KO = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
 
 function parseDate(str) {
@@ -24,52 +24,51 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
 
   const getTeam = id => teams.find(t => t.id === id);
 
-  /* ── Date range ───────────────────────────────────────── */
-  const allDates = tasks.flatMap(t => [
-    parseDate(t.createdAt), parseDate(t.dueDate),
-    ...(t.subtasks || []).flatMap(s => [parseDate(s.startDate), parseDate(s.dueDate)]),
-  ]);
-  const minRaw = new Date(Math.min(...allDates));
-  const maxRaw = new Date(Math.max(...allDates));
-  // Pad 5 days on each side
-  const minDate = new Date(minRaw); minDate.setDate(minDate.getDate() - 5);
-  const maxDate = new Date(maxRaw); maxDate.setDate(maxDate.getDate() + 5);
-  const totalDays = diffDays(minDate, maxDate) + 1;
+  /* ── Timeline geometry — memoized, recomputes only when tasks/zoom change ── */
+  const { minDate, totalDays, todayOff, months, weeks, dayLines, groups } = useMemo(() => {
+    const allDates = tasks.flatMap(t => [
+      parseDate(t.createdAt), parseDate(t.dueDate),
+      ...(t.subtasks || []).flatMap(s => [parseDate(s.startDate), parseDate(s.dueDate)]),
+    ]);
+    const minRaw = new Date(Math.min(...allDates));
+    const maxRaw = new Date(Math.max(...allDates));
+    const minDate = new Date(minRaw); minDate.setDate(minDate.getDate() - 5);
+    const maxDate = new Date(maxRaw); maxDate.setDate(maxDate.getDate() + 5);
+    const totalDays = diffDays(minDate, maxDate) + 1;
+    const todayOff  = diffDays(minDate, new Date());
 
-  const today = new Date();
-  const todayOff = diffDays(minDate, today);
+    // Month headers
+    const months = [];
+    let cur = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    while (cur <= maxDate) {
+      const startOff = Math.max(diffDays(minDate, cur), 0);
+      const nextMon  = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+      const endOff   = Math.min(diffDays(minDate, nextMon), totalDays);
+      if (endOff > startOff) {
+        months.push({ label: `${cur.getFullYear()}년 ${MONTH_KO[cur.getMonth()]}`, startOff, endOff });
+      }
+      cur = nextMon;
+    }
+
+    // Week markers every 7 days
+    const weeks = [];
+    for (let i = 0; i < totalDays; i += 7) {
+      const d = new Date(minDate); d.setDate(d.getDate() + i);
+      weeks.push({ off: i, label: `${d.getMonth()+1}/${d.getDate()}` });
+    }
+
+    const dayLines = Array.from({ length: totalDays }, (_, i) => i);
+
+    const groups = teams
+      .map(team => ({ team, tasks: tasks.filter(t => t.teamId === team.id) }))
+      .filter(g => g.tasks.length > 0);
+
+    return { minDate, totalDays, todayOff, months, weeks, dayLines, groups };
+  }, [tasks, teams]);
 
   /* ── Bar helpers ──────────────────────────────────────── */
   const barLeft  = dateStr => diffDays(minDate, parseDate(dateStr)) * dayW;
   const barWidth = (s, e)  => Math.max(diffDays(parseDate(s), parseDate(e)) * dayW, dayW);
-
-  /* ── Month/week header ────────────────────────────────── */
-  const months = [];
-  let cur = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-  while (cur <= maxDate) {
-    const startOff = Math.max(diffDays(minDate, cur), 0);
-    const nextMon  = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
-    const endOff   = Math.min(diffDays(minDate, nextMon), totalDays);
-    if (endOff > startOff) {
-      months.push({ label: `${cur.getFullYear()}년 ${MONTH_KO[cur.getMonth()]}`, left: startOff * dayW, width: (endOff - startOff) * dayW });
-    }
-    cur = nextMon;
-  }
-
-  // Week markers every 7 days
-  const weeks = [];
-  for (let i = 0; i < totalDays; i += 7) {
-    const d = new Date(minDate); d.setDate(d.getDate() + i);
-    weeks.push({ off: i, label: `${d.getMonth()+1}/${d.getDate()}` });
-  }
-
-  // Day grid lines (every 1 day, thin)
-  const dayLines = Array.from({ length: totalDays }, (_, i) => i);
-
-  /* ── Groups ───────────────────────────────────────────── */
-  const groups = teams
-    .map(team => ({ team, tasks: tasks.filter(t => t.teamId === team.id) }))
-    .filter(g => g.tasks.length > 0);
 
   const toggle = (id) =>
     setExpanded(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
@@ -203,7 +202,7 @@ export default function GanttPage({ tasks, teams, onSelectTask }) {
               <div style={{ height:22, position:"relative", borderBottom:"1px solid #e2e8f0", background:"#fafbfc" }}>
                 {months.map((m,i) => (
                   <div key={i} style={{
-                    position:"absolute", left:m.left, width:m.width,
+                    position:"absolute", left:m.startOff*dayW, width:(m.endOff-m.startOff)*dayW,
                     top:0, bottom:0, padding:"4px 8px",
                     fontSize:10, fontWeight:700, color:"#475569",
                     borderRight:"1px solid #e2e8f0", overflow:"hidden", whiteSpace:"nowrap",

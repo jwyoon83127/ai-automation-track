@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { statusConfig } from "../constants";
 
 const MONTH_NAMES = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
@@ -35,20 +35,31 @@ export default function CalendarPage({ tasks, teams, onSelectTask }) {
 
   const dateStr = (d) =>
     `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-  const isToday = (d) => dateStr(d) === dateStr(today);
-  const getTasksFor = (d) => tasks.filter(t => t.dueDate === dateStr(d));
+  const todayStr = dateStr(today);
+  const isToday = (d) => dateStr(d) === todayStr;
 
-  // Stats for this month
-  const monthTasks = tasks.filter(t => {
-    const [y, m] = t.dueDate.split("-").map(Number);
-    return y === year && m === month + 1;
-  });
-  const stats = {
-    total:      monthTasks.length,
-    done:       monthTasks.filter(t => t.status === "완료").length,
-    inProgress: monthTasks.filter(t => t.status === "진행중").length,
-    waiting:    monthTasks.filter(t => t.status === "대기").length,
-  };
+  // Pre-index tasks by dueDate for O(1) lookup per cell (replaces O(n) filter × 42 cells)
+  const { tasksByDate, stats } = useMemo(() => {
+    const map = {};
+    const monthTasks = [];
+    for (const t of tasks) {
+      if (!map[t.dueDate]) map[t.dueDate] = [];
+      map[t.dueDate].push(t);
+      const [y, m] = t.dueDate.split("-").map(Number);
+      if (y === year && m === month + 1) monthTasks.push(t);
+    }
+    return {
+      tasksByDate: map,
+      stats: {
+        total:      monthTasks.length,
+        done:       monthTasks.filter(t => t.status === "완료").length,
+        inProgress: monthTasks.filter(t => t.status === "진행중").length,
+        waiting:    monthTasks.filter(t => t.status === "대기").length,
+      },
+    };
+  }, [tasks, year, month]);
+
+  const getTasksFor = (d) => tasksByDate[dateStr(d)] || [];
 
   return (
     <div style={{ flex: 1, overflow: "auto", padding: 20 }}>
